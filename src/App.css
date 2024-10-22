@@ -1,0 +1,106 @@
+
+@font-face {
+  font-family: "Lamsa-font-light";
+  src: url("../assets/fonts/Lamsa-font/LamaSans-Light.woff") format("opentype"); /* Remove trailing slash */
+
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Lamsa-font-semiBold";
+  src: url("../assets/fonts/Lamsa-font/LamaSans-SemiBold.woff") format("opentype"); /* Remove trailing slash */
+
+  font-weight: normal;
+  font-style: normal;
+}@font-face {
+  font-family: "Lamsa-font-Bold";
+  src: url("../assets/fonts/Lamsa-font/LamaSans-Bold.woff") format("opentype"); /* Remove trailing slash */
+
+  font-weight: normal;
+  font-style: normal;
+}
+
+body {
+  font-family: "Lamsa-font-semiBold","Lamsa-font-Bold", sans-serif; /* Set a global font if needed */
+}
+.hidden {
+  display: none;
+}
+:root {
+  --background: #c7b1d2;
+  /* --navcolor: #291336; */
+  /* --inputcolor: #f7f7f7; */
+  --yellow: #125667;
+  /* --iconColor: #422852; */
+  --bordercolor: rgba(158, 157, 159, 0.959);
+  /* --gray: #aaa5a5;
+  --lightgray: #f1eaf0; */
+}
+::-webkit-scrollbar-track {
+  background: #f3f4f6;
+}
+
+::-webkit-scrollbar {
+  width: 0.5rem;
+}
+
+::-webkit-scrollbar-track {
+  border: 7px solid #4e3e49;
+  box-shadow: inset 0 0 2.5px 2px rgba(176, 165, 165, 0.5);
+  border-radius: 0.3rem;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(90deg, var(--yellow), var(--background));
+  border-radius: 0.3rem;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(270deg, var(--yellow), #7c7e7f, var(--yellow));
+}
+
+.font-stroke {
+  /* color: #125667; */
+  -webkit-text-stroke: 2px #125667; /* Adds black stroke */
+  font-weight: bolder !important;
+}
+.video-container {
+  position: relative;
+  width: 90%;
+  height: 0;
+  padding-bottom: 56.25%;
+  margin: 0 auto;
+}
+
+.video-container iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 90%;
+  border-radius: 12px;
+}
+
+@media (max-width: 1024px) {
+  .video-container {
+    width: 95%;
+  }
+}
+
+@media (max-width: 768px) {
+  .video-container {
+    width: 100%;
+  }
+}
+
+/* ul.nav-open::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.5); 
+  backdrop-filter: blur(5px);
+  z-index: -1; 
+} */
