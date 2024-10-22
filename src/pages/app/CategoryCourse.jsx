@@ -6,7 +6,7 @@ import axiosInstance from "../../axiosConfig/instance";
 const CategoryCourse = ({ grade }) => {
   const [courses, setCourses] = useState([]);
   const [loading, setLoading] = useState(true);
-  console.log(grade);
+  // console.log(grade);
 
   useEffect(() => {
     const fetchCourses = async () => {

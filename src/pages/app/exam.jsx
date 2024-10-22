@@ -1,24 +1,28 @@
-import React, { useEffect, useState } from "react";
-import { FaCheckCircle, FaTimesCircle } from "react-icons/fa";
+import React, { useEffect, useState, useRef } from "react";
 import useExamById from "../../../hooks/Exambyid";
 import axiosInstance from "../../axiosConfig/instance";
 import { useTheme } from "../../ThemeProvider";
+import { Link } from "react-router-dom";
+import ImageWithFullscreen from "../../components/FullScreen";
 
 const Exam = () => {
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [selectedAnswers, setSelectedAnswers] = useState([]);
   const [score, setScore] = useState(0);
   const [percentage, setPercentage] = useState(0);
-  const [showResult, setShowResult] = useState(false);
   const [end, setEnd] = useState(false);
   const [allAnswers, setAllAnswers] = useState([]);
   const [error, setError] = useState("");
   const [apiError, setApiError] = useState("");
-  const [isImageFullScreen, setIsImageFullScreen] = useState(false);
   const [timeUp, setTimeUp] = useState(false);
+  const [resultShow, setResultShow] = useState(false);
+  const [examSubmitted, setExamSubmitted] = useState(false); // New state to track if the exam is submitted
+
   const [examStartedAt, setExamStartedAt] = useState(new Date());
   const [remainingTime, setRemainingTime] = useState(0);
   const { isDarkTheme } = useTheme();
+
+  const timerRef = useRef(null); // To store the timer reference
 
   const { exam: examData } = useExamById();
   const token = localStorage.getItem("token");
@@ -44,7 +48,8 @@ const Exam = () => {
 
   // Timer for the exam
   useEffect(() => {
-    if (examData?.duration && examStartedAt) {
+    if (examData?.duration && examStartedAt && !examSubmitted) {
+      // Add examSubmitted to condition
       const durationInMs = examData.duration * 60 * 1000;
       const startTime = new Date(examStartedAt).getTime();
       const currentTime = Date.now();
@@ -52,32 +57,55 @@ const Exam = () => {
 
       if (timeLeft > 0) {
         setRemainingTime(Math.floor(timeLeft / 1000));
-        const timer = setInterval(() => {
+        timerRef.current = setInterval(() => {
           const newTimeLeft = startTime + durationInMs - Date.now();
           if (newTimeLeft <= 0) {
-            clearInterval(timer);
+            clearInterval(timerRef.current);
             handleAutoSubmit();
           } else {
             setRemainingTime(Math.floor(newTimeLeft / 1000));
           }
         }, 1000);
-        return () => clearInterval(timer);
+        return () => clearInterval(timerRef.current);
       } else {
         handleAutoSubmit();
       }
     }
-  }, [examData, examStartedAt]);
+  }, [examData, examStartedAt, examSubmitted]);
 
-  const handleAutoSubmit = async () => {
-    setTimeUp(true);
-    localStorage.removeItem("examId");
-    localStorage.removeItem("examStartedAt");
-    const result = await submitAnswer(allAnswers);
+  // Stop the timer if user submits early
+  const handleSubmit = async () => {
+    if (allAnswers.length !== examData.question.length) {
+      setError("Please answer all questions before submitting.");
+      return;
+    }
+    clearInterval(timerRef.current); // Stop the timer when the user submits
+    setExamSubmitted(true); // Mark the exam as submitted
+    const result = await submitAnswer();
     if (result) {
       setScore(result.score);
       setPercentage(result.percentage);
+      // console.log(result);
+      setResultShow(true);
       setEnd(true);
-      setShowResult(true);
+      localStorage.removeItem("examId");
+      localStorage.removeItem("examStartedAt");
+    }
+  };
+
+  const handleAutoSubmit = async () => {
+    if (!examSubmitted) {
+      // Check if exam is already submitted
+      setTimeUp(true);
+      clearInterval(timerRef.current); // Stop the timer when time is up
+      localStorage.removeItem("examId");
+      localStorage.removeItem("examStartedAt");
+      const result = await submitAnswer(allAnswers);
+      if (result) {
+        setScore(result.score);
+        setPercentage(result.percentage);
+        setEnd(true);
+      }
     }
   };
 
@@ -96,31 +124,10 @@ const Exam = () => {
           },
         }
       );
-      console.log(allAnswers);
-
-      console.log(response.data);
-
       return response.data;
     } catch (err) {
       setApiError("An error occurred while submitting your answer.");
       console.error(err);
-    }
-  };
-
-  const handleSubmit = async () => {
-    setTimeUp(false);
-    if (allAnswers.length !== examData.question.length) {
-      setError("Please answer all questions before submitting.");
-      return;
-    }
-    const result = await submitAnswer();
-    if (result) {
-      setScore(result.score);
-      setPercentage(result.percentage);
-      setShowResult(true);
-      setEnd(true);
-      localStorage.removeItem("examId");
-      localStorage.removeItem("examStartedAt");
     }
   };
 
@@ -129,7 +136,6 @@ const Exam = () => {
       setAllAnswers([...allAnswers, ...selectedAnswers]);
     }
     setSelectedAnswers([]);
-    setShowResult(false);
     setCurrentQuestion(currentQuestion + 1);
   };
 
@@ -150,32 +156,51 @@ const Exam = () => {
 
   return (
     <div
+      style={{
+        backgroundImage: "url('/images/background texture.png')",
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+      }}
       className={`min-h-screen pt-32 transition-all duration-300 ${
-        isDarkTheme ? "bg-gray-800" : "bg-gray-100"
+        isDarkTheme ? "bg-gray-800 text-white" : "bg-gray-100"
       } py-12 px-4`}
     >
       <div
-        className={`max-w-3xl mx-auto ${
+        className={`max-w-2xl mx-auto my-auto ${
           isDarkTheme ? "bg-gray-700" : "bg-gray-100"
         } shadow-md rounded-lg overflow-hidden`}
       >
         {timeUp ? (
-          <div className="text-center my-50">
-            <h2 className="text-5xl font-bold text-red-600 mb-4">
-              😒 وقت الامتحان انتهى!
-            </h2>
-            <p>تم تسليم الامتحان تلقائياً</p>
-          </div>
+          <>
+            <div className="flex flex-col justify-center items-center ">
+              <div className="text-center my-52">
+                <h2 className="text-5xl font-bold text-red-600 mb-4">
+                  😒 وقت الامتحان انتهى
+                </h2>
+                <p>تم تسليم الامتحان تلقائياً</p>
+              </div>
+              <Link to="/">
+                <button className="bg-gradient-to-r text-center from-GreidentColor2 to-secondaryBG shadow-md shadow-gray-800  text-white px-6 mb-5 py-1 rounded-lg font-bold text-lg transition-all duration-300 transform hover:scale-105  hover:shadow-gray-800 hover:shadow-md">
+                  🪄 الصفحة الرئيسية{" "}
+                </button>
+              </Link>
+            </div>
+          </>
         ) : (
           <>
             <div className="p-6">
               {!end && (
                 <>
-                  <div className="text-right mb-4 text-lg font-bold text-gray-700">
-                    ⌚ مدة الامتحان : {examData.duration} دقيقة
-                  </div>
-                  <div className="text-right mb-4 text-lg font-bold text-gray-700">
-                    👌 الوقت المتبقي: {formatTime(remainingTime)} دقيقة
+                  <div className=" flex-col gap-3 my-3">
+                    <h1 className="text-center text-2xl text-secondaryBG my-5 mb-10">
+                      (العلم➗الوقت)✖️ الصبر🟰التفوق
+                    </h1>
+                    <div className="text-right mb-4 text-lg font-bold ">
+                      ⌚ مدة الامتحان : {examData.duration} دقيقة
+                    </div>
+                    <div className="text-right mb-4 text-lg font-bold ">
+                      👌 الوقت المتبقي: {formatTime(remainingTime)} دقيقة
+                    </div>
                   </div>
                 </>
               )}
@@ -187,16 +212,15 @@ const Exam = () => {
                   <p className="text-lg text-gray-700 mb-6">
                     {questions[currentQuestion].questionTitle}
                   </p>
-                  <div
-                    className="w-full mb-5 h-48 bg-cover bg-center cursor-pointer"
-                    style={{
-                      backgroundImage: `url('${
-                        imageUrl || "/images/category.jpg"
-                      }')`,
-                      backgroundColor: imageUrl ? "transparent" : "#f0f0f0",
-                    }}
-                    title="Click to view full screen"
-                  ></div>
+
+                  <div className="w-full mb-5 h-60 bg-cover bg-center cursor-pointer">
+                    <ImageWithFullscreen
+                      src={imageUrl || "/images/category.jpg"}
+                      alt="Category Image"
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+
                   <div className="space-y-4">
                     {Object.entries(questions[currentQuestion].options).map(
                       ([key, answer]) => (
@@ -232,30 +256,37 @@ const Exam = () => {
                 </div>
               ) : (
                 <>
-                  {!end && (
+                  {!resultShow && (
                     <button
                       onClick={handleSubmit}
-                      className="mt-6 w-full bg-gradient-to-r from-primaryBG to-[#e0f485] text-white py-2 px-4 rounded-md hover:bg-blue-700 focus:outline-none transition-colors"
+                      className="my-6 w-full bg-gradient-to-r from-primaryBG to-[#e0f485] text-white py-2 px-4 rounded-md hover:bg-blue-700 focus:outline-none transition-colors"
                     >
-                      تسليم الامتحان
+                      تسليم الامتحان👍
                     </button>
                   )}
                 </>
               )}
-              {end && (
+              {resultShow && (
                 <>
-                  <div className="text-center">
-                    <h2 className="text-2xl font-bold text-gray-900 mb-4">
-                      😎 خلصت الامتحان اخيرا
+                  <div className="flex flex-col my-5 justify-center items-center gap-5">
+                    <h2 className="text-3xl my-20 font-bold text-green-500">
+                      ❤️ جاوبت على جميع الأسئلة
                     </h2>
-                    <p className="text-xl text-gray-700 mb-6">
-                      ✌️ الدرجه النهاييه بتاعتك هيا {score} من{" "}
+                    <p className="text-2xl  mb-4">
+                      ✌️ الدرجة النهائية بتاعتك هيا {score} من
                       {questions.length}
                     </p>
-                    <p className="text-xl text-gray-700 mb-6">
-                      {" "}
-                      النسبه المئويه {percentage}{" "}
+
+                    <p className="text-2xl  mb-4">
+                      ⚡النسبة المئوية {percentage}
                     </p>
+
+                    <Link to="/">
+                      <button className=" my-10 bg-gradient-to-r from-GreidentColor2 to-secondaryBG shadow-md shadow-gray-800  text-white px-6 mb-5 py-1 rounded-lg font-bold text-lg transition-all duration-300 transform hover:scale-105  hover:shadow-gray-800 hover:shadow-md">
+                        {" "}
+                        🪄 الصفحة الرئيسية{" "}
+                      </button>
+                    </Link>
                   </div>
                 </>
               )}

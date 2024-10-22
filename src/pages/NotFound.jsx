@@ -13,7 +13,7 @@ const NotFound = () => {
       <Link to="/">
         <button className="bg-gradient-to-r from-GreidentColor2 to-secondaryBG shadow-md shadow-gray-800  text-white px-6 mb-5 py-1 rounded-lg font-bold text-lg transition-all duration-300 transform hover:scale-105  hover:shadow-gray-800 hover:shadow-md">
           {" "}
-          الصفحه الرئيسيه
+          🪄الصفحه الرئيسيه
         </button>
       </Link>
     </div>

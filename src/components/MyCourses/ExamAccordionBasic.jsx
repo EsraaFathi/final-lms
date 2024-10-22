@@ -15,12 +15,18 @@ const ParentAccordion = ({ courseDetails }) => {
   const { isDarkTheme } = useTheme();
 
   const { purchasedCourses } = useUserDetails();
+  const { userDetails } = useUserDetails();
+
+  // console.log(userDetails);
+  const submitedExams = userDetails.submitedExams;
+  console.log(submitedExams);
+
   const courseId = courseDetails._id;
   const { examData, error } = useExamsByCourseId(courseId);
   const hasPurchased = purchasedCourses.some(
     (course) => course.course._id === courseId
   );
-  console.log(examData);
+  // console.log(examData);
 
   const accordionData = Array.isArray(examData)
     ? examData.map((exam) => ({
