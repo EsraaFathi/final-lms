@@ -11,7 +11,7 @@ const Exam = () => {
   const [precentage, setPrecentage] = useState(0);
 
   const [showResult, setShowResult] = useState(false);
-  const [end, setEnd] = useState(true);
+  const [end, setEnd] = useState();
   const [allAnswers, setAllAnswers] = useState([]); // New state to store all answers
 
   const [error, setError] = useState("");
@@ -81,6 +81,19 @@ const Exam = () => {
     }
   }, [examData, examStartedAt]);
   // AUTO SUBMIT WHEN RELOAD OT TIMEOUT
+  // const handleAutoSubmit = async () => {
+  //   setTimeUp(true);
+  //   localStorage.removeItem("examId");
+  //   localStorage.removeItem("examStartedAt");
+  //   const result = await submitAnswer();
+  //   if (result) {
+  //     setScore(result.score);
+  //     setPrecentage(result.percentage);
+  //     setEnd(true);
+
+  //     setShowResult(true);
+  //   }
+  // };
 
   const handleAutoSubmit = async () => {
     setTimeUp(true);
@@ -133,7 +146,7 @@ const Exam = () => {
       setScore(result.score);
       setPrecentage(result.percentage);
 
-      // setShowResult(true);
+      setShowResult(true);
       setEnd(true);
 
       localStorage.removeItem("examId");
@@ -146,7 +159,7 @@ const Exam = () => {
       setAllAnswers([...allAnswers, ...selectedAnswers]);
     }
     setSelectedAnswers([]);
-    // setShowResult(false);
+    setShowResult(false);
     setCurrentQuestion(currentQuestion + 1);
   };
 
@@ -258,20 +271,54 @@ const Exam = () => {
                   {apiError && (
                     <p className="text-red-500 mt-2">{apiError}</p>
                   )}{" "}
-                  <button
+                  {/* <button
                     onClick={handleSubmit}
                     className="mt-6 w-full bg-gradient-to-r from-primaryBG to-[#e0f485] text-white py-2 px-4 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors"
                   >
                     إرسال{" "}
-                  </button>
-                  <div className="mt-6">
+                  </button> */}
+                  {!showResult ? (
                     <button
-                      onClick={handleNextQuestion}
-                      className="mt-4 w-full bg-gradient-to-r from-GreidentColor2 to-[#e0f485] text-white py-2 px-4 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors"
+                      onClick={handleSubmit}
+                      className="mt-6 w-full bg-gradient-to-r from-primaryBG to-[#e0f485] text-white py-2 px-4 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors"
                     >
-                      السؤال التالي
+                      إرسال{" "}
                     </button>
-                  </div>
+                  ) : (
+                    <div className="mt-6">
+                      {/* <p
+                        className={`text-lg font-semibold ${
+                          selectedAnswers.includes(
+                            questions[currentQuestion].answer
+                          )
+                            ? "text-green-600"
+                            : "text-red-600"
+                        }`}
+                      >
+                        show result
+                        {selectedAnswers.includes(
+                          questions[currentQuestion].answer
+                        ) ? (
+                          <>
+                            <FaCheckCircle className="inline-block mr-2" />
+                            إجابه صحيحه !
+                          </>
+                        ) : (
+                          <>
+                            <FaTimesCircle className="inline-block mr-2" />
+                            الاجابه الصح هيا : إجابه غلط !{" "}
+                            {questions[currentQuestion].answer}
+                          </>
+                        )}
+                      </p> */}
+                      <button
+                        onClick={handleNextQuestion}
+                        className="mt-4 w-full bg-gradient-to-r from-GreidentColor2 to-[#e0f485] text-white py-2 px-4 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors"
+                      >
+                        السؤال التالي
+                      </button>
+                    </div>
+                  )}
                 </div>
               ) : (
                 <div className="text-center">
