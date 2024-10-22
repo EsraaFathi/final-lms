@@ -1,7 +1,7 @@
 import axios from "axios";
 const axiosInstance = axios.create({
-  baseURL: "https://api.ahmedhodeab.com/",
-  // baseURL: "http://localhost:5000/",
+  // baseURL: "https://api.ahmedhodeab.com/",
+  baseURL: "http://localhost:5000/",
 
   //   withCredentials: true,
   //   headers: { "Access-Control-Allow-Origin": "*" },

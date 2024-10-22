@@ -27,7 +27,7 @@ const useGetCourseById = () => {
           },
         });
         setCourseDetails(response.data);
-        console.log("setCourseDetails", response.data);
+        // console.log("setCourseDetails", response.data);
       } catch (err) {
         setError(
           err.message || "An error occurred while fetching course details"

@@ -12,7 +12,7 @@ import { MdOutlineAccessTime } from "react-icons/md";
 
 const ShowSec = ({ courseDetails }) => {
   const { isDarkTheme } = useTheme();
-  console.log(courseDetails);
+  // console.log(courseDetails);
 
   const imageUrl = courseDetails.image.secure_url;
   // console.log(imageUrl);

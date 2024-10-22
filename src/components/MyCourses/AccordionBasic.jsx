@@ -19,7 +19,7 @@ const ParentAccordion = ({ courseDetails }) => {
   const hasPurchased = purchasedCourses.some(
     (course) => course.course._id === courseId
   );
-  console.log(lessons);
+  // console.log(lessons);
 
   const accordionData = Array.isArray(lessons)
     ? lessons.map((lesson) => ({

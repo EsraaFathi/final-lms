@@ -52,7 +52,9 @@ const StudentProfile = () => {
   // const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const { userDetails, purchasedCourses, error, loading } = useUserDetails();
-  const { exams, loading: examsLoading, error: examsError } = useExams();
+  // const { exams, loading: examsLoading, error: examsError } = useExams();
+  // console.log(userDetails);
+  // const submitedExams = userDetails.submitedExams;
   const examResults = useExamResults();
   const {
     payments,
@@ -212,7 +214,7 @@ const StudentProfile = () => {
             كورساتي
           </a>
 
-          <a
+          {/* <a
             href="#"
             className={`flex items-center px-6 py-2 mt-5 text-xl ${
               isDarkTheme
@@ -230,7 +232,7 @@ const StudentProfile = () => {
           >
             <MdQuiz className="ml-3 text-secondaryBG" />
             الامتحانات
-          </a>
+          </a> */}
 
           <a
             href="#"
@@ -575,11 +577,11 @@ const StudentProfile = () => {
                         <td className="p-3 text-right">
                           {result?.exam?.title || "لا يوجد"}
                         </td>
-                        <td className="p-3 text-right">{result.score}</td>
-                        <td className="p-3 text-right">
+                        <td className="p-3 text-center">{result.score}</td>
+                        <td className="p-3 text-center">
                           {result.totalQuestions}
                         </td>
-                        <td className="p-3 text-right text-green-600">
+                        <td className="p-3 text-center text-green-600">
                           {result.percentage}%
                         </td>
                       </tr>
@@ -599,7 +601,7 @@ const StudentProfile = () => {
           </div>
         )}
         {/* EXAMS */}
-        {showExamsDetails && (
+        {/* {showExamsDetails && (
           <div
             className={`mt-10 p-6 rounded-lg shadow-md ${
               isDarkTheme ? "bg-gray-700" : "bg-white"
@@ -615,7 +617,7 @@ const StudentProfile = () => {
                 الامتحانات
               </h3>
             </div>
-            {exams.length > 0 ? (
+            {submitedExams.length > 0 ? (
               <div className="overflow-x-auto">
                 <table
                   className={`w-full text-left ${
@@ -631,16 +633,14 @@ const StudentProfile = () => {
                     >
                       <th className="p-3 text-xl text-right">العنوان</th>
                       <th className="p-3 text-xl text-right">الكورس</th>
-                      <th className="p-3 text-xl text-right">الدرس</th>
+                      <th className="p-3 text-xl text-right">عدد الأسئلة</th>
 
-                      <th className="p-3 text-xl text-right">
-                        الدخول للأمتحان
-                      </th>
-                      <th className="p-3 text-xl text-right">تاريخ النشر</th>
+                      <th className="p-3 text-xl text-right">الدرجة</th>
+                      <th className="p-3 text-xl text-right">النسبة</th>
                     </tr>
                   </thead>
                   <tbody>
-                    {exams.map((exam, index) => (
+                    {submitedExams.map((exam, index) => (
                       <tr
                         key={index}
                         className={`border-b ${
@@ -648,24 +648,20 @@ const StudentProfile = () => {
                         }`}
                       >
                         <td className="p-3 text-right">
-                          {exam.title ? exam.title : " لا يوجد"}
+                          title exam
                         </td>
 
                         <td className="p-3 text-right">
-                          {exam?.courseId?.title
-                            ? exam.courseId.title
-                            : "لا يوجد"}
+                          title course
+                    
                         </td>
                         <td className="p-3 text-right">
-                          {exam?.lessonId?.lessonName
-                            ? exam.lessonId.lessonName
-                            : "لا يوجد"}
-                        </td>
-                        <td className="p-3 text-green-400 text-right">
-                          <Link to={`/exam/${exam._id}`}>فتح الامتحان</Link>
-                        </td>
-                        <td className="p-3 text-right">
+                          {exam.totalQuestions}
                           {new Date(exam.createdAt).toLocaleDateString()}
+                        </td>
+                        <td className="p-3 text-right">{exam.score} درجة</td>
+                        <td className="p-3 text-green-400 text-right">
+                          {exam.percentage}%
                         </td>
                       </tr>
                     ))}
@@ -682,7 +678,7 @@ const StudentProfile = () => {
               </p>
             )}
           </div>
-        )}
+        )} */}
         {/* Code Center */}
         {showCodeCenter && (
           <div>

@@ -1,8 +1,8 @@
 /* eslint-disable react/prop-types */
-import AccordionBasic from "./AccordionBasic";
+import ExamAccordionBasic from "./ExamAccordionBasic";
 import { useTheme } from "../../ThemeProvider";
 
-const Accordion = ({ courseDetails }) => {
+const ExamAccordion = ({ courseDetails }) => {
   const { isDarkTheme } = useTheme();
 
   return (
@@ -15,9 +15,9 @@ const Accordion = ({ courseDetails }) => {
            }
         `}
     >
-      <AccordionBasic courseDetails={courseDetails} />
+      <ExamAccordionBasic courseDetails={courseDetails} />
     </div>
   );
 };
 
-export default Accordion;
+export default ExamAccordion;

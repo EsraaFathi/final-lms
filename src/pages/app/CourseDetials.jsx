@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import Accordion from "../../components/MyCourses/Accordion";
 import CardDetials from "../../components/MyCourses/CardDetials";
 import useGetCourseById from "../../../hooks/CourseById";
+import ExamAccordion from "../../components/MyCourses/ExamAccordion";
 
 const CourseDetials = () => {
   const { courseDetails, loading, error } = useGetCourseById();
@@ -32,6 +33,7 @@ const CourseDetials = () => {
       <ShowSec courseDetails={courseDetails} />
       <CardDetials courseDetails={courseDetails} />
       <Accordion courseDetails={courseDetails} />
+      <ExamAccordion courseDetails={courseDetails} />
     </div>
   );
 };

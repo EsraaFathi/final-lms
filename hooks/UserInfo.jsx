@@ -23,6 +23,7 @@ const useUserDetails = () => {
           setUserDetails(response.data.user);
           setPurchasedCourses(response.data.user.purchasedCourses);
           // console.log("purchasedCourses", response.data.user.purchasedCourses);
+          // console.log("userDetails", response.data.user);
         }
       } catch (err) {
         setError(err.message);
