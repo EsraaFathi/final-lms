@@ -329,7 +329,7 @@ const StudentProfile = () => {
                 isDarkTheme ? "bg-gray-700" : "bg-white"
               }`}
             >
-              <div className="flex items-center mb-6">
+              <div className="md:flex items-center mb-6">
                 <img
                   src="/images/defaultperson.jpg"
                   alt="student"

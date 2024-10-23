@@ -1,10 +1,12 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState, useRef } from "react";
 import useExamById from "../../../hooks/Exambyid";
 import axiosInstance from "../../axiosConfig/instance";
 import { useTheme } from "../../ThemeProvider";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import ImageWithFullscreen from "../../components/FullScreen";
-
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 const Exam = () => {
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [selectedAnswers, setSelectedAnswers] = useState([]);
@@ -24,6 +26,7 @@ const Exam = () => {
   const { isDarkTheme } = useTheme();
 
   const timerRef = useRef(null); // To store the timer reference
+  const navigate = useNavigate();
 
   const { exam: examData } = useExamById();
   const token = localStorage.getItem("token");
@@ -130,8 +133,17 @@ const Exam = () => {
       );
       return response.data;
     } catch (err) {
-      setApiError("An error occurred while submitting your answer.");
       console.error(err);
+      if (
+        err?.response?.data?.message === "You have already submitted this exam"
+      ) {
+        // Correct 'err' reference
+        toast.error("امتحنته قبل كده");
+        // navigate(-1);
+      } else {
+        // Handle other errors
+        toast.error("An error occurred while submitting the exam");
+      }
     }
   };
 
@@ -286,7 +298,7 @@ const Exam = () => {
                     </p>
 
                     <p className="text-2xl  mb-4">
-                      🟰عدد الأسئلة{totalQuestions}
+                      {totalQuestions}🟰عدد الأسئلة
                     </p>
 
                     <Link to="/">
@@ -302,6 +314,7 @@ const Exam = () => {
           </>
         )}
       </div>
+      <ToastContainer position="top-right" autoClose={2000} />
     </div>
   );
 };

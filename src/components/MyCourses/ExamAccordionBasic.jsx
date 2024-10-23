@@ -1,8 +1,6 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react/prop-types */
 import { useState, useEffect } from "react";
 import { FaPlay, FaLock } from "react-icons/fa";
-import { Link, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import useUserDetails from "../../../hooks/UserInfo";
 import { useTheme } from "../../ThemeProvider";
@@ -11,27 +9,49 @@ import { FaChevronDown, FaChevronUp } from "react-icons/fa";
 
 const ParentAccordion = ({ courseDetails }) => {
   const { isDarkTheme } = useTheme();
-  const { submitedExams, purchasedCourses, userDetails } = useUserDetails();
+  const { purchasedCourses, userDetails, submitedExams } = useUserDetails();
   const courseId = courseDetails._id;
   const { examData, error } = useExamsByCourseId(courseId);
   const hasPurchased = purchasedCourses.some(
     (course) => course.course._id === courseId
   );
-  const [availableExams, setAvailableExams] = useState([]);
 
-  // const navigate = useNavigate();
+  // // State to track if each exam is submitted or not
+  const [submittedExamsStatus, setSubmittedExamsStatus] = useState({});
+
+  // // Effect to check which exams are submitted
   useEffect(() => {
-    setAvailableExams(
-      examData?.filter((exam) => !submitedExams?.includes(exam._id)) || []
-    );
-    console.log("examData", examData);
-    console.log("submittedExams", submitedExams);
-    console.log("Available Exams:", availableExams);
+    // console.log("submitedExams", submitedExams);
+    // console.log("examData", examData);
+
+    if (Array.isArray(examData) && submitedExams.length > 0) {
+      const status = {};
+
+      // Extract the `exam` IDs from the `submitedExams` array
+      const submittedExamIds = submitedExams.map(
+        (submittedExam) => submittedExam.exam
+      );
+
+      examData.forEach((exam) => {
+        console.log("Checking Exam ID:", exam._id);
+
+        const isSubmitted = submittedExamIds.includes(exam._id);
+        console.log("Is submitted:", isSubmitted);
+
+        status[exam._id] = isSubmitted;
+      });
+
+      console.log("status", status);
+
+      setSubmittedExamsStatus(status);
+    }
   }, [examData, userDetails]);
 
-  const accordionData = Array.isArray(availableExams)
-    ? availableExams?.map((exam) => {
-        // console.log(exam._id);
+  const accordionData = Array.isArray(examData)
+    ? examData.map((exam) => {
+        const examAlreadySubmitted = submittedExamsStatus[exam._id] || false;
+        console.log(exam._id);
+
         return {
           title: exam.title,
           content: (
@@ -39,6 +59,7 @@ const ParentAccordion = ({ courseDetails }) => {
               {/* <h3 className="font-bold text-3xl text-secondaryBG my-2">
                 الامتحانات
               </h3> */}
+
               <div className="flex justify-end">
                 <div className="w-24 h-1 bg-primaryBG mb-2"></div>
               </div>
@@ -46,7 +67,7 @@ const ParentAccordion = ({ courseDetails }) => {
                 <div className="w-16 h-1 bg-secondaryBG mb-2"></div>
               </div>
 
-              {availableExams.length > 0 ? (
+              {examData.length > 0 ? (
                 <div key={exam._id} className="mb-4 flex flex-col">
                   <motion.p
                     className="font-medium mb-2"
@@ -69,32 +90,31 @@ const ParentAccordion = ({ courseDetails }) => {
                       }}
                       whileTap={{ scale: 0.95 }}
                     >
-                      {/* {examAlreadySubmitted ? (
-                        // If the exam is already submitted, show this button
-                        <button
+                      {examAlreadySubmitted ? (
+                        <Link
+                          to={`/exam-notfound`}
                           className="flex flex-col items-center underline text-red-600 transition-colors duration-300"
-                          onClick={() => navigate("/not-found")}
                         >
                           <FaLock className="mb-1" />
                           <span>لقد قمت بتقديم هذا الامتحان من قبل</span>
-                        </button>
-                      ) : ( */}
-                      {/* // If not submitted, show the "فتح الامتحان" button */}
-                      <Link
-                        to={`/exam`}
-                        className="flex flex-col items-center underline text-secondaryBG transition-colors duration-300"
-                        onClick={() => {
-                          localStorage.setItem(
-                            "examStartedAt",
-                            new Date().toISOString()
-                          );
-                          localStorage.setItem("examId", exam._id);
-                        }}
-                      >
-                        <FaPlay className="mb-1" />
-                        <span>فتح الامتحان👍</span>
-                      </Link>
-                      {/* )} */}
+                        </Link>
+                      ) : (
+                        // If not submitted, show the "فتح الامتحان" button
+                        <Link
+                          to={`/exam`}
+                          className="flex flex-col items-center underline text-secondaryBG transition-colors duration-300"
+                          onClick={() => {
+                            localStorage.setItem(
+                              "examStartedAt",
+                              new Date().toISOString()
+                            );
+                            localStorage.setItem("examId", exam._id);
+                          }}
+                        >
+                          <FaPlay className="mb-1" />
+                          <span>فتح الامتحان</span>
+                        </Link>
+                      )}
                     </motion.div>
                   ) : (
                     <div className="flex flex-col items-center text-gray-500">
@@ -127,7 +147,7 @@ const ParentAccordion = ({ courseDetails }) => {
         <div className="w-1/4 h-1  bg-primaryBG mb-2"></div>
       </div>
       {error && <p className="text-red-500">{error}</p>}
-      {availableExams?.length > 0 ? (
+      {examData?.length > 0 ? (
         <NestedAccordion items={accordionData} />
       ) : (
         <p>مفيش امتحانات لسه😊</p>
@@ -146,7 +166,27 @@ const AccordionItem = ({ title, children, isOpen, toggleAccordion }) => {
         onClick={toggleAccordion}
       >
         {isOpen ? <FaChevronUp /> : <FaChevronDown />}
-        <span className="text-right">{title}</span>
+        <span>
+          <motion.div
+            className=" flex gap-10 mb-4"
+            initial={{ scale: 0 }}
+            animate={{ scale: 1 }}
+            transition={{
+              delay: 0.5,
+              type: "spring",
+              stiffness: 100,
+              damping: 10,
+            }}
+          >
+            <span className="text-right">{title}</span>
+
+            <img
+              src="/images/task_15591446.png"
+              alt="Card image"
+              className="w-8 h-8 object-cover"
+            />
+          </motion.div>
+        </span>
       </button>
       {isOpen && <div className="text-right p-4">{children}</div>}
     </div>
@@ -161,7 +201,7 @@ const NestedAccordion = ({ items }) => {
 
   return (
     <div className="space-y-2">
-      {items?.map((item, index) => (
+      {items.map((item, index) => (
         <AccordionItem
           key={index}
           title={item.title}

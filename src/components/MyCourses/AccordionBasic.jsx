@@ -186,7 +186,27 @@ const AccordionItem = ({ title, children, isOpen, toggleAccordion }) => {
         onClick={toggleAccordion}
       >
         {isOpen ? <FaChevronUp /> : <FaChevronDown />}
-        <span className="text-right">{title}</span>
+        <span className="text-right">
+          <motion.div
+            className=" flex gap-10 mb-4"
+            initial={{ scale: 0 }}
+            animate={{ scale: 1 }}
+            transition={{
+              delay: 0.5,
+              type: "spring",
+              stiffness: 100,
+              damping: 10,
+            }}
+          >
+            <span className="text-right">{title}</span>
+
+            <img
+              src="/images/تصميم بدون عنوان (4).png"
+              alt="Card image"
+              className="w-10 h-8 object-cover"
+            />
+          </motion.div>
+        </span>
       </button>
       {isOpen && <div className="text-right p-4">{children}</div>}
     </div>

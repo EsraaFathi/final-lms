@@ -8,12 +8,12 @@ const Login = () => {
 
   return (
     <main
-      className={`min-h-screen flex flex-col md:flex-row ${
+      className={`min-h-screen  justify-center flex flex-col lg:flex-row ${
         isDarkTheme ? "bg-gray-900" : "bg-gray-100"
       }`}
     >
       {/* Left side - Image (hidden on mobile) */}
-      <div className="bg-primaryBG pt-20 hidden md:block md:w-1/2 relative overflow-hidden md:h-screen">
+      <div className="bg-primaryBG pt-20 hidden lg:block lg:w-1/2 lg:h-screen relative overflow-hidden ">
         <img
           src="/images/ليك وحشة والله.png"
           alt="Register"
@@ -23,9 +23,9 @@ const Login = () => {
 
       {/* Right side - Login Form */}
       <div
-        className={`w-full md:w-1/2 ${
+        className={`w-full lg:w-1/2 ${
           isDarkTheme ? "bg-gray-800" : "bg-white"
-        } min-h-screen md:h-screen overflow-y-auto flex justify-center items-center p-4 md:p-12`}
+        } min-h-screen lg:h-screen overflow-y-auto flex justify-center items-center p-4 lg:p-12`}
       >
         <LoginForm />
       </div>
