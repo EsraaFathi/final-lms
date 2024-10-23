@@ -4,31 +4,7 @@ import { motion } from "framer-motion";
 
 const SecondSec = () => {
   return (
-    <div className=" bg-no-repeat bg-center">
-      {/* <div
-        style={{ fontFamily: "Lamsa-font-Bold" }}
-        className="font-bold md:mt-8 text-4xl md:text-6xl  flex justify-center  text-center "
-      >
-        <img
-          src="/images/why.webp"
-          className="h-36 w-40 hidden md:block "
-          alt=""
-          // srcset=""
-        />
-
-        <div className="text-right mb-5">
-          <div className="flex pt-10 my-2">
-            <span className="  text-secondaryBG">المعلم الأول</span>
-            <span className=" text-primaryBG ">ليه تختار</span>
-          </div>
-          <div className="flex  justify-end">
-            <div className="w-32 h-1  bg-primaryBG mb-2"></div>
-          </div>
-          <div className="flex  justify-end">
-            <div className="w-20 h-1  bg-secondaryBG mb-2"></div>
-          </div>
-        </div>
-      </div> */}
+    <div className=" bg-no-repeat bg-center mb-16">
       <div
         style={{ fontFamily: "Lamsa-font-Bold" }}
         className="font-bold md:mt-8 text-3xl sm:text-4xl md:text-6xl flex justify-center items-center text-center"

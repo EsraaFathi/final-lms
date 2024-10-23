@@ -35,23 +35,13 @@ const CourseCard = ({ CourseId, course, className }) => {
     >
       {/* </div>  h-[192px] w-[341px] */}
       <div className="bg-GreidentColor rounded-xl p-4 flex flex-col  lg:flex lg:flex-col lg:items- relative">
-        {/* <div
-          className="aspect-w-16 aspect-h-9  w-[256px] h-[144px] lg:w-auto flex-none  bg-cover rounded-xl text-center overflow-hidden"
-          style={{
-            backgroundImage: `url('${
-              imageUrl || "/images/DA7f-ezgif.com-gif-maker.gif"
-            }')`,
-            backgroundColor: imageUrl ? "transparent" : "#f0f0f0", // fallback color
-          }}
-          title="Course Image"
-        ></div> */}
         <div
-          className="aspect-w-16 aspect-h-9 w-[256px] h-[144px] lg:w-auto flex-none bg-cover rounded-xl text-center overflow-hidden transition-transform duration-300 ease-in-out transform hover:scale-105"
+          className="aspect-w-16 aspect-h-9 w-[256px] h-[144px] w-auto flex-none bg-cover rounded-lg text-center overflow-hidden transition-transform duration-300 ease-in-out transform hover:scale-105"
           style={{
             backgroundImage: `url('${
               imageUrl || "/images/DA7f-ezgif.com-gif-maker.gif"
             }')`,
-            backgroundColor: imageUrl ? "transparent" : "#f0f0f0", // fallback color
+            backgroundColor: imageUrl ? "transparent" : "#f0f0f0",
           }}
           title="Course Image"
         ></div>

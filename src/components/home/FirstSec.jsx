@@ -7,11 +7,11 @@ const FirstSec = () => {
   const { isDarkTheme } = useTheme();
 
   return (
-    <div className="container mx-auto mr-5 px-4 ">
-      <div className="flex flex-col md:flex-row gap-10">
+    <div className="container flex flex-col justify-center mx-auto  px-4 ">
+      <div className="flex flex-col justify-center md:flex-row gap-10">
         {/* Right Column */}
         <motion.div
-          className="  container flex-1 w-full md:w-1/2 bg-cover bg-center"
+          className="  container flex-1  justify-center w-full md:w-1/2 bg-cover bg-center"
           initial={{ opacity: 0, x: -100 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 1.2, ease: "easeOut" }}
@@ -29,7 +29,7 @@ const FirstSec = () => {
 
         {/* Left Column */}
         <motion.div
-          className="w-full flex-1 justify-end  container md:mt-10 md:py-20 md:w-1/2 mb-8 md:mb-0 "
+          className=" container w-full flex-1 justify-center md:mt-10 md:py-20 md:w-1/2 mb-8 md:mb-0 "
           initial={{ opacity: 0, x: 100 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 1.2, ease: "easeOut", delay: 0.3 }}

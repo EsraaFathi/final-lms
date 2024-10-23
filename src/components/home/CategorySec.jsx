@@ -20,7 +20,7 @@ const CategorySec = () => {
             className="h-24 w-28 sm:h-42 sm:w-42 md:h-42 md:w-40 pt-10 md:pt-0"
             alt=""
           />
-          <div className="text-right mb-5 pt-10 md:pt-0">
+          <div className="text-right md:my-12 mb-10 pt-10 md:pt-0">
             <div className="flex my-2">
               <span className="text-primaryBG">...الدراسي</span>
               <span className="text-secondaryBG">اختار صفك</span>

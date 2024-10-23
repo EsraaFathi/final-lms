@@ -35,7 +35,7 @@ const RecentCourses = () => {
         >
           <img
             src="/images/recentcourses.webp"
-            className="h-24 w-28 sm:h-24 sm:w-24 mb-4 md:mb-0 md:h-36 md:w-40" // Decreased size for small screens
+            className="h-24 w-28 sm:h-24 sm:w-24 mb-4 md:mb-0 md:h-36 md:w-40"
             alt=""
           />
 

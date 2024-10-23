@@ -4,6 +4,8 @@ import axiosInstance from "../src/axiosConfig/instance";
 const useUserDetails = () => {
   const [userDetails, setUserDetails] = useState(null);
   const [purchasedCourses, setPurchasedCourses] = useState([]);
+  const [submitedExams, setSubmitedExams] = useState([]);
+
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const token = localStorage.getItem("token");
@@ -22,8 +24,9 @@ const useUserDetails = () => {
         if (response.data && response.data.user) {
           setUserDetails(response.data.user);
           setPurchasedCourses(response.data.user.purchasedCourses);
-          // console.log("purchasedCourses", response.data.user.purchasedCourses);
-          // console.log("userDetails", response.data.user);
+          setSubmitedExams(response.data.user.submitedExams);
+          // console.log("user", response.data.user);
+          // console.log("submitedExams HOOKKK", response.data.user.submitedExams);
         }
       } catch (err) {
         setError(err.message);
@@ -37,7 +40,7 @@ const useUserDetails = () => {
     }
   }, [userId, token]);
 
-  return { userDetails, purchasedCourses, error, loading };
+  return { userDetails, purchasedCourses, submitedExams, error, loading };
 };
 
 export default useUserDetails;
