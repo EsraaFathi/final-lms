@@ -17,6 +17,7 @@ const Exam = () => {
   const [timeUp, setTimeUp] = useState(false);
   const [resultShow, setResultShow] = useState(false);
   const [examSubmitted, setExamSubmitted] = useState(false); // New state to track if the exam is submitted
+  const [totalQuestions, setTotalQuestions] = useState(0);
 
   const [examStartedAt, setExamStartedAt] = useState(new Date());
   const [remainingTime, setRemainingTime] = useState(0);
@@ -49,6 +50,8 @@ const Exam = () => {
   // Timer for the exam
   useEffect(() => {
     if (examData?.duration && examStartedAt && !examSubmitted) {
+      setTotalQuestions(examData.question.length);
+
       // Add examSubmitted to condition
       const durationInMs = examData.duration * 60 * 1000;
       const startTime = new Date(examStartedAt).getTime();
@@ -72,6 +75,7 @@ const Exam = () => {
       }
     }
   }, [examData, examStartedAt, examSubmitted]);
+  //
 
   // Stop the timer if user submits early
   const handleSubmit = async () => {
@@ -85,7 +89,7 @@ const Exam = () => {
     if (result) {
       setScore(result.score);
       setPercentage(result.percentage);
-      // console.log(result);
+      console.log(result);
       setResultShow(true);
       setEnd(true);
       localStorage.removeItem("examId");
@@ -192,7 +196,7 @@ const Exam = () => {
               {!end && (
                 <>
                   <div className=" flex-col gap-3 my-3">
-                    <h1 className="text-center text-2xl text-secondaryBG my-5 mb-10">
+                    <h1 className="text-center text-lg md:text-xl text-secondaryBG my-5 mb-10">
                       (العلم➗الوقت)✖️ الصبر🟰التفوق
                     </h1>
                     <div className="text-right mb-4 text-lg font-bold ">
@@ -269,16 +273,20 @@ const Exam = () => {
               {resultShow && (
                 <>
                   <div className="flex flex-col my-5 justify-center items-center gap-5">
-                    <h2 className="text-3xl my-20 font-bold text-green-500">
+                    <h2 className="md:text-3xl text-lg my-20 font-bold text-green-500">
                       ❤️ جاوبت على جميع الأسئلة
                     </h2>
-                    <p className="text-2xl  mb-4">
+                    <p className="md:text-2xl text-lg mb-4">
                       ✌️ الدرجة النهائية بتاعتك هيا {score} من
                       {questions.length}
                     </p>
 
-                    <p className="text-2xl  mb-4">
+                    <p className="md:text-2xl text-lg mb-4">
                       ⚡النسبة المئوية {percentage}
+                    </p>
+
+                    <p className="text-2xl  mb-4">
+                      🟰عدد الأسئلة{totalQuestions}
                     </p>
 
                     <Link to="/">
