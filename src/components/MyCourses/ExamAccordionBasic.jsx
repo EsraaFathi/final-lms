@@ -31,7 +31,7 @@ const ParentAccordion = ({ courseDetails }) => {
 
   const accordionData = Array.isArray(availableExams)
     ? availableExams?.map((exam) => {
-        console.log(exam._id);
+        // console.log(exam._id);
         return {
           title: exam.title,
           content: (
