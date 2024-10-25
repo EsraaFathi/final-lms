@@ -5,7 +5,7 @@ export const loginUser = createAsyncThunk("auth/login", async (userData) => {
   const response = await axiosInstance.post("/users/login", userData);
   return response.data;
 });
-console.log(loginUser);
+// console.log(loginUser);
 const authSlice = createSlice({
   name: "auth",
   initialState: {

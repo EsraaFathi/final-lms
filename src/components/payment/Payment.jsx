@@ -75,7 +75,7 @@ const Payment = ({ courseId, amount, course }) => {
         };
       }
 
-      console.log(token, requestBody);
+      // console.log(token, requestBody);
 
       const response = await axiosInstance.post(
         `courses/purchase-course`,
@@ -99,7 +99,7 @@ const Payment = ({ courseId, amount, course }) => {
     } catch (error) {
       console.error(
         "Error initiating payment:",
-        error.response?.data || error.message
+        error.response?.data.details.message.cartTotal || error.message
       );
     } finally {
       setIsLoading(false);

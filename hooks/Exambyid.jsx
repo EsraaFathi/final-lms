@@ -18,7 +18,7 @@ const useExamById = () => {
           },
         });
         setExam(response.data.exam);
-        console.log(response.data.exam);
+        // console.log(response.data.exam);
       } catch (err) {
         setError("Error fetching exam details. Please try again.");
         console.error(err);

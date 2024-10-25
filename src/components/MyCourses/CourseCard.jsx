@@ -9,12 +9,13 @@ const CourseCard = ({ CourseId, course, className }) => {
   const navigate = useNavigate();
   const amount = course?.price || 0;
   const { purchasedCourses } = useUserDetails();
+  // console.log(purchasedCourses);
 
   const imageUrl = course.image.secure_url;
   // console.log(course);
 
-  const hasPurchased = purchasedCourses.some(
-    (purchasedCourse) => purchasedCourse.course._id === CourseId
+  const hasPurchased = purchasedCourses?.some(
+    (purchasedCourse) => purchasedCourse?.course?._id === CourseId
   );
 
   const handleViewContent = () => {

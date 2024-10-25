@@ -6,6 +6,7 @@ import useUserDetails from "../../../hooks/UserInfo";
 import { useTheme } from "../../ThemeProvider";
 import useExamsByCourseId from "../../../hooks/CourseExams";
 import { FaChevronDown, FaChevronUp } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 const ParentAccordion = ({ courseDetails }) => {
   const { isDarkTheme } = useTheme();
@@ -33,15 +34,15 @@ const ParentAccordion = ({ courseDetails }) => {
       );
 
       examData.forEach((exam) => {
-        console.log("Checking Exam ID:", exam._id);
+        // console.log("Checking Exam ID:", exam._id);
 
         const isSubmitted = submittedExamIds.includes(exam._id);
-        console.log("Is submitted:", isSubmitted);
+        // console.log("Is submitted:", isSubmitted);
 
         status[exam._id] = isSubmitted;
       });
 
-      console.log("status", status);
+      // console.log("status", status);
 
       setSubmittedExamsStatus(status);
     }
@@ -50,7 +51,7 @@ const ParentAccordion = ({ courseDetails }) => {
   const accordionData = Array.isArray(examData)
     ? examData.map((exam) => {
         const examAlreadySubmitted = submittedExamsStatus[exam._id] || false;
-        console.log(exam._id);
+        // console.log(exam._id);
 
         return {
           title: exam.title,

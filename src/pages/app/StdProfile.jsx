@@ -1,15 +1,7 @@
 // export default StudentProfile;
 import React, { useState, useEffect } from "react"; // Import useEffect
-import {
-  FaUser,
-  FaBook,
-  FaBell,
-  FaCalendar,
-  FaTimes,
-  FaBars,
-} from "react-icons/fa";
+import { FaUser, FaBook, FaBell } from "react-icons/fa";
 import { FaWallet, FaWandMagicSparkles } from "react-icons/fa6";
-import { MdQuiz } from "react-icons/md";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { motion } from "framer-motion";

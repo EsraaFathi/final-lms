@@ -31,7 +31,7 @@ const RecentCourses = () => {
       >
         <div
           style={{ fontFamily: "Lamsa-font-Bold" }}
-          className="font-bold md:mt-8 text-3xl sm:text-4xl md:text-6xl flex flex md:flex-row justify-center items-center text-center px-4"
+          className="font-bold md:mt-8 text-3xl sm:text-4xl md:text-6xl flex  md:flex-row justify-center items-center text-center px-4"
         >
           <img
             src="/images/recentcourses.webp"

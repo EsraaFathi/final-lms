@@ -13,11 +13,11 @@ const CategorySec = () => {
       <div className="my-8">
         <div
           style={{ fontFamily: "Lamsa-font-Bold" }}
-          className="font-bold text-2xl sm:text-3xl md:text-6xl flex md:flex-row justify-center items-center text-center px-4"
+          className="font-bold text-2xl sm:text-3xl md:text-6xl flex  md:flex-row justify-center items-center text-center px-4"
         >
           <img
             src="/images/chooseGradewebp.webp"
-            className="h-24 w-28 sm:h-42 sm:w-42 md:h-42 md:w-40 pt-10 md:pt-0"
+            className="h-24 w-24  md:h-42 md:w-40  md:pt-0"
             alt=""
           />
           <div className="text-right md:my-12 mb-10 pt-10 md:pt-0">

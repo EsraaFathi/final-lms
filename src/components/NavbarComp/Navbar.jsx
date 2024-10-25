@@ -3,7 +3,6 @@ import { AiOutlineClose, AiOutlineMenu } from "react-icons/ai";
 import { Link } from "react-router-dom";
 import { useTheme } from "../../ThemeProvider";
 import { HiOutlineLogin } from "react-icons/hi";
-import DarkModeSwitcher from "./DarkModeSwitcher";
 import { useSelector, useDispatch } from "react-redux";
 import { logout } from "../store/slices/auth";
 import OverlayPortal from "../../layouts/OvarlayPortal";
@@ -85,7 +84,7 @@ const Navbar = () => {
             {nav ? (
               <AiOutlineClose className="cursor-pointer" size={20} />
             ) : (
-              <AiOutlineMenu className="cursor-pointer" size={20} />
+              <AiOutlineMenu className="cursor-pointer" size={35} />
             )}
           </div>
         </div>
@@ -151,7 +150,7 @@ const Navbar = () => {
             <img
               src="/images/Animation - 1729177991149.gif"
               alt="User"
-              className="w-10 h-auto p-2 relative z-10 sm:w-12 md:w-20 lg:w-24"
+              className="w-16 h-auto p relative z-10  md:w-20 lg:w-24"
             />
           </div>
           <Link to="/">
@@ -164,7 +163,7 @@ const Navbar = () => {
               <img
                 src="/images/logoooo.png"
                 alt="User"
-                className=" aspect-w-16 aspect-h-9 w-20 h-auto p-2 relative z-10 sm:w-24 md:w-32 lg:w-40"
+                className=" aspect-w-16 aspect-h-9 w-32 h-auto p-2 relative z-10  md:w-32 lg:w-40"
               />
             </div>
           </Link>

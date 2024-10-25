@@ -92,7 +92,7 @@ const Exam = () => {
     if (result) {
       setScore(result.score);
       setPercentage(result.percentage);
-      console.log(result);
+      // console.log(result);
       setResultShow(true);
       setEnd(true);
       localStorage.removeItem("examId");

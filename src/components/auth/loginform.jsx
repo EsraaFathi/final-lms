@@ -26,7 +26,7 @@ const LoginForm = () => {
     try {
       const response = await dispatch(loginUser(values)).unwrap();
       toast.success("تم تسجيل الدخول بنجاح!");
-      console.log("Login successful", response);
+      // console.log("Login successful", response);
 
       setTimeout(() => {
         navigate("/mycourses");
