@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react/prop-types */
 import { useState, useEffect } from "react";
 import { FaPlay, FaLock } from "react-icons/fa";
@@ -11,10 +12,10 @@ import { Link } from "react-router-dom";
 const ParentAccordion = ({ courseDetails }) => {
   const { isDarkTheme } = useTheme();
   const { purchasedCourses, userDetails, submitedExams } = useUserDetails();
-  const courseId = courseDetails._id;
+  const courseId = courseDetails?._id;
   const { examData, error } = useExamsByCourseId(courseId);
-  const hasPurchased = purchasedCourses.some(
-    (course) => course.course._id === courseId
+  const hasPurchased = purchasedCourses?.some(
+    (course) => course?.course?._id === courseId
   );
 
   // // State to track if each exam is submitted or not
@@ -57,10 +58,6 @@ const ParentAccordion = ({ courseDetails }) => {
           title: exam.title,
           content: (
             <div>
-              {/* <h3 className="font-bold text-3xl text-secondaryBG my-2">
-                الامتحانات
-              </h3> */}
-
               <div className="flex justify-end">
                 <div className="w-24 h-1 bg-primaryBG mb-2"></div>
               </div>
@@ -109,7 +106,7 @@ const ParentAccordion = ({ courseDetails }) => {
                               "examStartedAt",
                               new Date().toISOString()
                             );
-                            localStorage.setItem("examId", exam._id);
+                            localStorage.setItem("examId", exam?._id);
                           }}
                         >
                           <FaPlay className="mb-1" />

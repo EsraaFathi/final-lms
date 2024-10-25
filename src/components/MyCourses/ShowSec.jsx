@@ -21,8 +21,8 @@ const ShowSec = ({ courseDetails }) => {
   const courseId = courseDetails?._id;
   const amount = courseDetails?.price;
   const { lessons } = useFetchLessons(courseId);
-  const hasPurchased = purchasedCourses.some(
-    (course) => course.course._id === courseId
+  const hasPurchased = purchasedCourses?.some(
+    (course) => course?.course?._id === courseId
   );
   const hasLessons = lessons && lessons.length > 0;
 

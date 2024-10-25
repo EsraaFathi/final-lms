@@ -16,8 +16,8 @@ const ParentAccordion = ({ courseDetails }) => {
     ? courseDetails.map((course) => course._id)[0]
     : courseDetails._id;
   const { lessons, error } = useFetchLessons(courseId);
-  const hasPurchased = purchasedCourses.some(
-    (course) => course.course._id === courseId
+  const hasPurchased = purchasedCourses?.some(
+    (course) => course?.course?._id === courseId
   );
   // console.log(lessons);
 
@@ -37,9 +37,9 @@ const ParentAccordion = ({ courseDetails }) => {
               {/* <div className="w-32 h-1  bg-primaryBG mb-2"></div> */}
               <div className="w-16 h-1  bg-secondaryBG mb-2"></div>
             </div>
-            {lesson.videoUrl?.length > 0 ? (
+            {lesson?.videoUrl?.length > 0 ? (
               lesson.videoUrl.map((video) => (
-                <div key={video._id} className="mb-4 flex flex-col">
+                <div key={video?._id} className="mb-4 flex flex-col">
                   <motion.p
                     className="font-medium mb-2"
                     initial={{ opacity: 0, x: 20 }}
@@ -72,20 +72,6 @@ const ParentAccordion = ({ courseDetails }) => {
                         <FaPlay className="mb-1" />
                         <span>مشاهدة الفيديو</span>
                       </Link>
-
-                      {/* <div>
-                        <iframe
-                          width="560"
-                          height="315"
-                          src="https://www.youtube.com/embed/MqfUL6upaMU?si=06Zbs1m8oC4fNiNh?showinfo=0&controls=0&frameborder=0"
-                          title="YouTube video player"
-                          // frameborder="0"
-                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                          referrerpolicy="strict-origin-when-cross-origin"
-                          allowfullscreen
-                        ></iframe>
-                      </div> */}
-                      {/* <p>{video.URL}</p> */}
                     </motion.div>
                   ) : (
                     <div className="flex flex-col items-center text-gray-500">
@@ -143,7 +129,7 @@ const ParentAccordion = ({ courseDetails }) => {
                 </div>
               ))
             ) : (
-              <p>لا توجد ملحقات متاحة.</p>
+              <p>لا توجد ملحقات متاحة</p>
             )}
           </div>
         ),
